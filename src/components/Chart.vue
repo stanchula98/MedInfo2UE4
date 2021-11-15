@@ -24,9 +24,9 @@
   </div>
 </template>
 <script>
-import bloodpreassure_json from "../parsed_data/Blutdruck.json";
-import bloodsugar_json from "../parsed_data/Blutdruck.json";
-import weight_json from "../parsed_data/Blutdruck.json";
+import bloodpreassure_json from "../parsed_data/Blutzucker.json";
+import bloodsugar_json from "../parsed_data/Blutzucker.json";
+import weight_json from "../parsed_data/Gewicht.json";
 // console.log(bloodpreassure_json);
 var la = [];
 var sys = [];
