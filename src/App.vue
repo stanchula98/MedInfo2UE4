@@ -1,9 +1,7 @@
 <template>
   <v-app>
     <v-app-bar app color="primary" dark>
-      <div class="d-flex align-center">
-        MedInfo2 UE 4
-      </div>
+      <div class="d-flex align-center">MedInfo2 UE 4</div>
 
       <v-spacer></v-spacer>
       <v-select
@@ -43,16 +41,8 @@
 import DataTable from "./components/DataTable.vue";
 import metaData from "./parsed_data/Metadaten.json";
 import bloodsugar_json from "./parsed_data/Blutzucker.json";
-// const sqlite3 = require('sqlite3').verbose();
-
-// let db = new sqlite3.Database('db.db', sqlite3.OPEN_READWRITE, (err) => {
-//         if (err) {
-//           console.error(err.message);
-//         }
-//         console.log('Connected to the database.');
-//       });
-// console.log(sqlite3)
-
+import bloodpreassure_json from "./parsed_data/Blutdruck.json";
+import weight_json from "./parsed_data/Gewicht.json"
 
 var guid = [];
 
@@ -70,16 +60,7 @@ export default {
 
   data: () => ({
     items: ["Blutdruck", "Blutzucker", "Gewicht"],
-    header: [
-      {
-        text: "Zeitpunkt",
-        value: "timestamp",
-      },
-      {
-        text: "Blutzuckerspiegel in mg/dl",
-        value: "value",
-      },
-    ],
+    header: null,
     guids: guid,
     selectedItem: null,
     selectedGUID: null,
@@ -101,18 +82,78 @@ export default {
           bloodsugar_json.forEach((elem) => {
             if (elem.GUID == this.selectedGUID) {
               var date = elem.timestamp.split(" ")[0];
-              // var year = date.split("-")[0];
-              // var month = date.split("-")[1];
-              // var day = date.split("-")[2];
               result.push({
                 timestamp: date,
                 value: elem.value[0],
               });
             }
-            //return result;
-            console.log(elem);
           });
-          console.log(this.selectedGUID);
+          this.header = [
+            {
+              text: "Zeitpunkt",
+              value: "timestamp",
+            },
+            {
+              text: "Blutzuckerspiegel in mg/dl",
+              value: "value",
+            },
+          ];
+          this.data = result;
+          break;
+
+        case "Blutdruck":
+          bloodpreassure_json.forEach((elem) => {
+            if (elem.GUID == this.selectedGUID) {
+              var date = elem.timestamp.split(" ")[0];
+              result.push({
+                timestamp: date,
+                systole: elem.value[0],
+                diastole: elem.value[1],
+                bpm: elem.value[2]
+              });
+            }
+          });
+          this.header = [
+            {
+              text: "Zeitpunkt",
+              value: "timestamp",
+            },
+            {
+              text: "Systolisch mm/hg",
+              value: "systole",
+            },
+            {
+              text: "Diastolisch mm/hg",
+              value: "diastole",
+            },
+            {
+              text: "Herzrate bpm",
+              value: "bpm",
+            }
+          ];
+          this.data = result;
+          break;
+
+          case "Gewicht":
+            weight_json.forEach((elem) => {
+            if (elem.GUID == this.selectedGUID) {
+              var date = elem.timestamp.split(" ")[0];
+              result.push({
+                timestamp: date,
+                weight: elem.value[0]
+              });
+            }
+          });
+          this.header = [
+            {
+              text: "Zeitpunkt",
+              value: "timestamp",
+            },
+            {
+              text: "Gewicht in kg",
+              value: "weight",
+            }
+          ];
           this.data = result;
           break;
 
