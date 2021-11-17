@@ -2,7 +2,6 @@
 node_modules
 
 raw_data
-parsed_data
 
 
 # local env files
@@ -23,4 +22,3 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
-src/parsed_data/Schritte.json
