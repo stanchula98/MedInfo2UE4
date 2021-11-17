@@ -33,7 +33,7 @@ node vitalparameter_parser.js
 Now all your parsed JSON files should be generated in your disired destination.
 
 
-## migrate date to sqlite database
+## migrate data to sqlite database
 
 ```
 cd /path/to/parser
